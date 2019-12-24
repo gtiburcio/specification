@@ -1,6 +1,7 @@
 package br.com.estudos.specifications.controller;
 
 import br.com.estudos.specifications.domain.Aluno;
+import br.com.estudos.specifications.domain.AlunoRequest;
 import br.com.estudos.specifications.domain.filters.AlunoFilter;
 import br.com.estudos.specifications.services.AlunoService;
 import io.swagger.annotations.ApiOperation;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.noContent;
 
 @RestController
 @RequestMapping("/alunos")
@@ -24,6 +28,12 @@ import java.util.List;
 public class AlunoController {
 
     private final AlunoService alunoService;
+
+    @PostMapping("/teste")
+    public ResponseEntity<Void> teste(@RequestBody @Valid AlunoRequest alunoRequest) {
+        System.out.println(alunoService.convertToChar(alunoRequest.caracter));
+        return noContent().build();
+    }
 
     @GetMapping("/")
     @ApiOperation("Buscar todos os aluno")
@@ -55,7 +65,7 @@ public class AlunoController {
         alunoService.findById(id);
         aluno.setId(id);
         alunoService.save(aluno);
-        return ResponseEntity.noContent().build();
+        return noContent().build();
     }
 
     @PostMapping("/filter")

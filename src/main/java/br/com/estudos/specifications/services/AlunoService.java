@@ -3,6 +3,7 @@ package br.com.estudos.specifications.services;
 import br.com.estudos.specifications.domain.Aluno;
 import br.com.estudos.specifications.domain.filters.AlunoFilter;
 import br.com.estudos.specifications.exceptions.AlunoNotFoundException;
+import br.com.estudos.specifications.exceptions.CaracterBadRequestException;
 import br.com.estudos.specifications.repositories.AlunoRepository;
 import br.com.estudos.specifications.repositories.spc.AlunoSpecification;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,10 @@ public class AlunoService {
 
     public List<Aluno> findFilter(AlunoFilter alunoFilter) {
         return repository.findAll(new AlunoSpecification(alunoFilter));
+    }
+
+    public char convertToChar(String caracter) {
+        return caracter.charAt(0);
     }
 
 }

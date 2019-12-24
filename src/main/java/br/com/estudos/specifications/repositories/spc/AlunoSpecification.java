@@ -19,10 +19,6 @@ public class AlunoSpecification implements Specification<Aluno> {
         this.alunoFilter = alunoFilter;
     }
 
-    public void add(Predicate predicate, Expression expression) {
-        predicate.getExpressions().add(expression);
-    }
-
     @Override
     public Predicate toPredicate(Root<Aluno> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         Predicate predicate = criteriaBuilder.conjunction();
@@ -48,5 +44,9 @@ public class AlunoSpecification implements Specification<Aluno> {
         }
 
         return predicate;
+    }
+
+    public void add(Predicate predicate, Expression expression) {
+        predicate.getExpressions().add(expression);
     }
 }
