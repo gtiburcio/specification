@@ -2,6 +2,8 @@ package br.com.estudos.specifications.controller;
 
 import br.com.estudos.specifications.domain.Aluno;
 import br.com.estudos.specifications.domain.filters.AlunoFilter;
+import br.com.estudos.specifications.domain.request.AlunoRequest;
+import br.com.estudos.specifications.mapper.AlunoMapper;
 import br.com.estudos.specifications.services.AlunoService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,8 @@ public class AlunoController {
 
     private final AlunoService alunoService;
 
+    private final AlunoMapper alunoMapper;
+
     @GetMapping("/")
     @ApiOperation("Buscar todos os aluno")
     public ResponseEntity<List<Aluno>> findAll() {
@@ -41,9 +45,9 @@ public class AlunoController {
 
     @PostMapping("/")
     @ApiOperation("Salvar um aluno")
-    public ResponseEntity<Void> saveAluno(@RequestBody Aluno aluno) {
+    public ResponseEntity<Void> saveAluno(@RequestBody AlunoRequest alunoRequest) {
+        Aluno aluno = alunoMapper.requestToEntity(alunoRequest, alunoService);
         aluno = alunoService.save(aluno);
-
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(aluno.getId()).toUri();

@@ -23,4 +23,15 @@ public class HandlerException {
                 .description(alunoNotFoundException.getMsg())
                 .build());
     }
+
+    @ExceptionHandler(SalaNotFoundException.class)
+    @ResponseBody
+    public ResponseEntity<ExceptionResponse> salaNotFoundException(SalaNotFoundException ex) {
+        return ResponseEntity.status(NOT_FOUND).body(ExceptionResponse.builder()
+                .code(NOT_FOUND.value())
+                .status(NOT_FOUND.getReasonPhrase())
+                .date(LocalDateTime.now())
+                .description(ex.getMessage())
+                .build());
+    }
 }
